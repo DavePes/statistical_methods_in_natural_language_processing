@@ -23,8 +23,8 @@ for i, lang in enumerate(langs):
 ## counting
 
 from collections import Counter
-data_sizes = {}
 def dataset_counter(tokens):
+    data_sizes = {}
     unigrams_frequencies,unigrams_counts = {}, {}
     bigrams_frequencies,bigrams_counts = {}, {}
     trigrams_frequencies,trigrams_counts = {}, {}
@@ -84,16 +84,44 @@ from transformers import XLMRobertaTokenizer
 xlm_tokenizer = XLMRobertaTokenizer.from_pretrained("xlm-roberta-base")
 xlm_tokens = {}
 for i, lang in enumerate(langs):
-    lang_tokens = []
-    for text in texts[i]:
-        tokens_ids = xlm_tokenizer.encode(text, add_special_tokens=False)
-        tokens_str = [xlm_tokenizer.convert_ids_to_tokens(tid) for tid in tokens_ids]
-        lang_tokens.extend(tokens_str)
+    lang_tokens = xlm_tokenizer.tokenize(texts[i])
     xlm_tokens[lang] = lang_tokens
 
+(unigrams_frequencies,unigrams_counts,
+ bigrams_frequencies,bigrams_counts,
+ trigrams_frequencies,trigrams_counts,
+ data_sizes) = dataset_counter(xlm_tokens)
 
+table_data = bigram_entropy(bigrams_frequencies, unigrams_frequencies, data_sizes)
+print(tabulate(table_data, headers=["Language", "Unigrams", "Bigrams", "Data Size", "Bigram Entropy (XLM-R)"]))
 
+## dataset splits
 
+tokens_train = {}
+tokens_val = {}
+tokens_test = {}
+
+for lang in langs:
+    total_tokens = len(tokens[lang])
     
+    # Example split: 80% Train, 10% val, 10% Test
+    train_end = 700
+    val_end = train_end + 200
+    
+    tokens_train[lang] = tokens[lang][:train_end]
+    tokens_val[lang] = tokens[lang][train_end:val_end]
+    tokens_test[lang] = tokens[lang][val_end:]
 
+
+## counting
+
+
+(unigrams_frequencies,unigrams_counts,
+ bigrams_frequencies,bigrams_counts,
+ trigrams_frequencies,trigrams_counts,
+ data_sizes) = dataset_counter(tokens_train)
+
+## entropy
+table_data = bigram_entropy(bigrams_frequencies, unigrams_frequencies, data_sizes)
+print(tabulate(table_data, headers=["Language", "Unigrams", "Bigrams", "
     
