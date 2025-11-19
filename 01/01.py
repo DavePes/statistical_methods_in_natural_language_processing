@@ -156,6 +156,8 @@ def compute_probs(stats):
             trigram_probs[lang][(w1, w2, w3)] = p_w3_given_w1_w2
     return unigram_probs, bigram_probs, trigram_probs
 
+
+
 def interpolated_cross_entropy(tokens,unigram_probs,bigram_probs,trigram_probs, lambdas=[0.25, 0.25, 0.25, 0.25]):
     """
     Calculates cross-entropy on TEST data using probabilities from TRAIN data.
@@ -187,15 +189,39 @@ def interpolated_cross_entropy(tokens,unigram_probs,bigram_probs,trigram_probs, 
         entropies.append((lang, entropy))
     return entropies
 
-## def best lambdas EM algorithm
+## def best lambdas EM algorithm only for one language cs
 from math import abs
-def em_optimal_lambdas(tokens, unigram_probs, bigram_probs, trigram_probs, default_lambdas=[0.25, 0.25, 0.25, 0.25]):
-    lambdas = default_lambdas
-    lambdas_new = [100, 100, 100, 100]
-    unigram_probs, bigram_probs, trigram_probs = compute_probs(val_stats)
 
-    while 
-    
+def em_optimal_lambdas(tokens, unigram_probs, bigram_probs, trigram_probs,epsilon=1e-6, default_lambdas=[0.25, 0.25, 0.25, 0.25]):
+    lambdas = default_lambdas
+    unigram_probs, bigram_probs, trigram_probs = compute_probs(val_stats)
+    for lang in langs:
+        N = len(tokens[lang])
+        V = len(unigram_probs[lang])
+        while True:
+            expected_counts = [0.0, 0.0, 0.0, 0.0]
+            for i in range(2, N):
+                w3 = tokens[lang][i]     # Target
+                w2 = tokens[lang][i-1]   # Context
+                w1 = tokens[lang][i-2]   # Context
+                p_tri = trigram_probs[lang].get((w1, w2, w3), 0.0)
+                p_bi  = bigram_probs[lang].get((w2, w3), 0.0)
+                p_uni = unigram_probs[lang].get(w3, 0.0)
+                p0 = 1.0 / V
+                probs = [p_tri, p_bi, p_uni, p0]
+                p_combined = (lambdas[0] * p_tri) + (lambdas[1] * p_bi) + (lambdas[2] * p_uni) + (lambdas[3] * p0)
+                if p_combined > 0:
+                    for j in range(4):
+                        expected_counts[j] += (lambdas[j] * probs[j]) / p_combined
+                # --- Step 3: M-Step (Next Lambda) ---
+                total_count = sum(expected_counts)
+                lambdas_new = [count / total_count for count in expected_counts]
+
+                diff = sum(abs(lambdas_new[j] - lambdas[j]) for j in range(4))
+
+                if diff < epsilon:
+                    break
+                lambdas = lambdas_new
     return lambdas
 
         
