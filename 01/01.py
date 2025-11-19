@@ -36,7 +36,7 @@ def dataset_counter(tokens):
             bigram[(tokens[lang][i], tokens[lang][i+1])] += 1
             if (i < len(tokens[lang])-2):
                 trigram[(tokens[lang][i], tokens[lang][i+1], tokens[lang][i+2])] += 1
-        unigrams_frequencies[lang] = unigram(tokens[lang])
+        unigrams_frequencies[lang] = Counter(tokens[lang])
         unigrams_counts[lang] = len(unigram)
         bigrams_frequencies[lang] = bigram
         bigrams_counts[lang] = len(bigram)
@@ -121,7 +121,11 @@ for lang in langs:
  trigrams_frequencies,trigrams_counts,
  data_sizes) = dataset_counter(tokens_train)
 
-## entropy
+## entropy ## lambdas
 table_data = bigram_entropy(bigrams_frequencies, unigrams_frequencies, data_sizes)
-print(tabulate(table_data, headers=["Language", "Unigrams", "Bigrams", "
+print(tabulate(table_data, headers=["Language", "Unigrams", "Bigrams", "Data Size", "Bigram Entropy (Train)"]))
+
+
+
+
     
