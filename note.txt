@@ -1,0 +1,155 @@
+
+NPFL147 Assignment 1 Submission
+This should serve as a checklist that you have finished all parts of the assignment. In the bottom of this form there will be a field to provide URL for a Google Colab or similar with your code.
+pesek.david0@gmail.com Switch account
+ 
+Not shared
+ 
+Draft saved
+* Indicates required question
+Your name
+*
+David Pešek
+Contact email
+*
+pesek.david0@gmail.com
+Additional language(s) of your choosing
+*
+Select one or more languages you used for entropy calculations beyond Czech and English
+Slovak
+Norwegian
+Turkish
+Basque
+German
+Irish
+English stats: Data size
+*
+How many tokens of English did you count after applying MosesTokenizer?
+955309 
+English stats: Unigrams
+*
+How many unique unigrams of English did you count after applying MosesTokenizer?
+71970
+English stats: Bigrams
+*
+How many unique bigrams of English did you count after applying MosesTokenizer?
+376075
+English stats: Entropy
+*
+What is the conditional entropy of the English dataset tokenized with MosesTokenizer?
+5.6723
+Czech stats: Entropy
+*
+What is the conditional entropy of the Czech dataset tokenized with MosesTokenizer?
+5.064
+Entropy of the other language
+*
+What is the conditional entropy of the dataset of the language you chose tokenized with MosesTokenizer? (If you chose more, pick one)
+5.593
+Entropy observations
+What do you observe when you compare the entropies of Czech and English? Explain why. 
+English has the highest entropy (5.6723) → it is the least predictable among the three.
+Czech has the lowest entropy (5.064) → it is the most predictable.
+English has highest unigrams/bigrams ratio suggesting more combinations and variability → higher uncertainty → higher entropy
+Tabulated results
+*
+Confirm that the notebook contains code to generate tables that show detailed statistics for each of the languages: data size, number of unique unigrams, bigrams, and conditional entropy.
+Yes
+No (selecting this will probably cost you points)
+English stats: XLM-R tokens
+*
+How many tokens in total was in the English dataset after tokenization with XLM-R?
+1308899
+English stats: XLM-R entropy
+What was the conditional entropy of the Enlglish data after XLM-R tokenization?
+5.3282
+XLM-R discussion
+*
+Do you observe a change in entropy after switching to XLM-R tokenization? What do you think are the reasons?
+Czech (CS) :  MosesTokenizer: 5.064 → XLM-R: 5.5088
+English (EN):  MosesTokenizer: 5.6723 → XLM-R: 5.3282
+
+XLM-R tokenization works on subwords, not full words.
+This changes the distribution of tokens:
+languages with more compounds or rich morphology (like CS) tend to show higher entropy, while languages with simpler word structures (like EN) can show lower entropy after subword tokenization.
+XLM-R tabulated results
+*
+Does the notebook include code to generate a table with data statistics after XLM-R tokenization?
+Yes
+No (selecting this will probably cost you points)
+Data splits for language modeling
+*
+Check to confirm you split the data according to the assignment slides (first 700 docs for training, next 200 for heldout, last 100 for test)
+
+Note: the Hugging Face dataset contains only a single split called "train" that contains 1000 documents per language. Your job is to take this and further split it down into the three folds.
+Yes
+No (selecting this will probably cost you points)
+Language selection for language modeling
+*
+You should run experiments for the same set of languages you did in the first part.
+I ran the experiments on the same set of languages as the first part (or on a subset but at least on three languages including Czech and English))
+I ran the experiments only on one language (selecting this will probably cost you points)
+Other:
+Tokenization for LM smoothing
+*
+For all experiments with LM smoothing, you should tokenize the data with MosesTokenizer.
+I used MosesTokenizer to tokenize my data splits
+I run the LM smoothing experiments twice, once with MosesTokenizer and once with XLM-R (selecting this might gain you some bonus points)
+I did something else (selecting this will probably cost you points)
+English n-gram train stats
+*
+Enter the number of unique English unigrams, bigrams, and trigrams that you counted in the training data. Three numbers separated by semicolon.
+55447; 276211;462583 
+Trigram probability test (eng)
+*
+What is the trigram probability of the English trigram "beginning of the"? (be mindful about OOV histories!)
+1
+Trigram probability test (ces)
+*
+What is the trigram probability of the Czech trigram "průzkum veřejného mínění"? [English: opinion poll] (be mindful about OOV histories!)
+0.0
+ 
+Must be a number greater than 0
+Interpolated probability test
+*
+What is the smoothed probability of the Czech trigram "průzkum veřejného mínění", when using uniform weights, i.e. 0.25 for each of uniform, unigram, bigram, and trigram distributions.
+ 
+This is a required question
+English lambdas
+*
+Provide the ideal lambdas you got by the EM algorithm for English (four numbers separated by semicolon)
+Cross entropy of English test set
+*
+Enter the measured cross entropy of the English test set after EM algorithm found the best lambdas.
+Notebook shows resulting lambdas
+*
+Confirm that the notebook shows the resulting lambdas in all the experiments.
+Yes
+No (selecting this will probably cost you points)
+Notebook shows cross entropies
+*
+Confirm that the notebook shows final cross-entropies measured on the test set after EM algorithm finished.
+Yes
+No (selecting this will probably cost you points)
+Graphs of cross entropy vs value of lambda 3
+*
+Confirm that the notebook shows a plot of the test data cross entropy with respect to the value of the trigram smoothing parameter (for all languages).
+Yes
+No (selecting this will probably cost you points)
+LM Smoothing - Discussion
+*
+What do you observe about the values of the resulting lambda parameters in each language? How do they compare across languages? Why?
+Code URL
+*
+An URL to a self-contained notebook that can be run from top to bottom.
+Use of AI declaration
+*
+Please disclose if or how did you use generative models when working on this assignment. If you gained some insights about applying AI models for this, we'd be happy if you share them with us!
+yes
+Feedback
+Anything else you might want to comment regarding the assignment and/or submission? For example, did you find this checklist helpful?
+Never submit passwords through Google Forms.
+This content is neither created nor endorsed by Google. - Contact form owner - Terms of Service - Privacy Policy
+Does this form look suspicious? Report
+
+Google Forms
